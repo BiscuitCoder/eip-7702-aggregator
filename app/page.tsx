@@ -9,12 +9,15 @@ import { TaskModule, AVAILABLE_MODULES } from "@/components/modules/types"
 import { ModuleCard } from "@/components/modules/ModuleCard"
 import { ModuleSelector } from "@/components/modules/ModuleSelector"
 import { EmptyState } from "@/components/modules/EmptyState"
+import { WalletConnect } from "@/components/WalletConnect"
+import { useAccount } from "wagmi"
 
 export default function Component() {
   const [selectedModules, setSelectedModules] = useState<TaskModule[]>([])
   const [buildStatus, setBuildStatus] = useState<"idle" | "building" | "success" | "error">("idle")
   const [buildError, setBuildError] = useState<string>("")
   const { toast } = useToast()
+  const { isConnected } = useAccount()
 
   const addModule = (moduleType: string) => {
     const template = AVAILABLE_MODULES.find((m) => m.id === moduleType)
@@ -105,11 +108,25 @@ export default function Component() {
       return
     }
 
+    // 收集所有模块的数据
+    const transactionData = selectedModules.map((module, index) => ({
+      index: index + 1,
+      type: module.type,
+      title: module.title,
+      params: module.params,
+    }))
+
+    console.log("交易数据:", transactionData)
+    toast({
+      title: "交易数据已收集",
+      description: `共 ${transactionData.length} 个模块，准备执行交易...`,
+    })
+
     // 模拟构建过程
     await new Promise((resolve) => setTimeout(resolve, 2000))
 
     // 这里会与7702代理合约交互
-    console.log("执行聚合交易:", selectedModules)
+    console.log("执行聚合交易:", transactionData)
     toast({
       title: "交易已发送",
       description: "交易已发送到7702代理合约！",
@@ -120,17 +137,27 @@ export default function Component() {
   return (
     <div className="container mx-auto py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">EVM-7702 交易聚合器</h1>
-        <p className="text-gray-600">
-          通过拖拽方式组合多个交易模块，构建复杂的链上交易流程。
-        </p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold mb-2">EVM-7702 交易聚合器</h1>
+            <p className="text-gray-600">
+              通过拖拽方式组合多个交易模块，构建复杂的链上交易流程。
+            </p>
+          </div>
+          <WalletConnect />
+        </div>
       </div>
 
       <div className="grid grid-cols-12 gap-6">
         {/* 左侧模块选择区 */}
         <div className="col-span-3">
           <div className="sticky top-0 bg-white/80 backdrop-blur-sm z-10">
-            <h2 className="text-lg font-semibold py-4">可用模块</h2>
+            <div className="flex items-center py-4 space-x-2">
+              <h2 className="text-lg font-semibold">可用模块</h2>
+              <span className="text-sm text-gray-500">
+                ({AVAILABLE_MODULES.length})
+              </span>
+            </div>
             <ModuleSelector onAddModule={addModule} />
           </div>
         </div>
@@ -139,8 +166,13 @@ export default function Component() {
         <div className="col-span-9">
           <div className="sticky top-0 bg-white/80 backdrop-blur-sm z-10 py-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold">任务链</h2>
-              {selectedModules.length > 0 && (
+              <div className="flex items-center space-x-2">
+                <h2 className="text-lg font-semibold">任务链</h2>
+                <span className="text-sm text-gray-500">
+                  {selectedModules.length > 0 && `(${selectedModules.length})`}
+                </span>
+              </div>
+              {selectedModules.length > 0 && isConnected && (
                 <Button
                   onClick={executeTransaction}
                   disabled={buildStatus === "building"}
