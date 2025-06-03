@@ -74,9 +74,9 @@ export function CustomContractForm({ contractAddress, methods, onMethodSelect }:
   return (
     <div className="space-y-4">
       <div className="space-y-2">
-        {methods.map((method) => (
+        {methods.map((method, index) => (
           <div
-            key={method.name}
+            key={index}
             className="w-full justify-start h-auto py-3 px-4 cursor-pointer border border-gray-200 rounded-md hover:bg-gray-50 transition-colors"
             onClick={() => handleMethodClick(method)}
           >

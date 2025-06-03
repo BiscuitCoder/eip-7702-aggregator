@@ -1,6 +1,7 @@
 import { create } from 'zustand'
+import { devtools } from 'zustand/middleware'
+import { v4 as uuidv4 } from 'uuid'
 import { ContractMethod } from '@/components/modules/types'
-import { devtools, persist, createJSONStorage } from 'zustand/middleware';
 
 export interface TaskModule {
   id: string
@@ -8,9 +9,9 @@ export interface TaskModule {
   title: string
   description: string
   icon: string
-  contractAddress?: string
-  method?: ContractMethod
+  method?: any
   params: Record<string, any>
+  contractAddress?: string
 }
 
 interface TaskStore {
@@ -21,7 +22,7 @@ interface TaskStore {
   reorderModules: (modules: TaskModule[]) => void
 }
 
-export const useTaskStore = create<TaskStore>()(devtools(persist((set) => ({
+export const useTaskStore = create<TaskStore>()(devtools((set) => ({
   modules: [],
   addModule: (module) => set((state) => ({
     modules: [...state.modules, module]
@@ -35,7 +36,4 @@ export const useTaskStore = create<TaskStore>()(devtools(persist((set) => ({
     )
   })),
   reorderModules: (modules) => set({ modules })
-}), {
-  name: 'task-store',
-  storage: createJSONStorage(() => localStorage)
 }))) 
