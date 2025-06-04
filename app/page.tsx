@@ -7,13 +7,18 @@ import { WalletConnect } from "@/components/WalletConnect"
 import { useAccount } from "wagmi"
 import { useTaskStore } from "@/lib/store"
 import { TaskList } from "@/components/modules/TaskList"
+import { useBatchCallContract } from "@/contracts/useContract"
 
 export default function Home() {
   const modules = useTaskStore(state => state.modules)
   const { toast } = useToast()
   const { isConnected } = useAccount()
 
+  const { write } = useBatchCallContract()
+
   const handleExecute = async () => {
+    write()
+    return;
     if (modules.length === 0) {
       toast({
         title: "错误",
@@ -34,10 +39,6 @@ export default function Home() {
     }))
 
     console.log("Transaction data:", transactionData)
-    toast({
-      title: "成功",
-      description: `已收集 ${modules.length} 个模块的数据`,
-    })
   }
 
   return (

@@ -1,0 +1,512 @@
+[{
+    "inputs": [{
+        "internalType": "address",
+        "name": "mainStorageImpl",
+        "type": "address"
+    }, {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+    }, {
+        "internalType": "string",
+        "name": "version",
+        "type": "string"
+    }],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+}, {
+    "inputs": [{
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
+    }, {
+        "internalType": "bytes",
+        "name": "returnData",
+        "type": "bytes"
+    }],
+    "name": "CallFailed",
+    "type": "error"
+}, {
+    "inputs": [],
+    "name": "CloneArgumentsTooLong",
+    "type": "error"
+}, {
+    "inputs": [],
+    "name": "Create2EmptyBytecode",
+    "type": "error"
+}, {
+    "inputs": [],
+    "name": "FailedDeployment",
+    "type": "error"
+}, {
+    "inputs": [{
+        "internalType": "uint256",
+        "name": "balance",
+        "type": "uint256"
+    }, {
+        "internalType": "uint256",
+        "name": "needed",
+        "type": "uint256"
+    }],
+    "name": "InsufficientBalance",
+    "type": "error"
+}, {
+    "inputs": [],
+    "name": "InvalidExecutor",
+    "type": "error"
+}, {
+    "inputs": [],
+    "name": "InvalidSession",
+    "type": "error"
+}, {
+    "inputs": [],
+    "name": "InvalidShortString",
+    "type": "error"
+}, {
+    "inputs": [],
+    "name": "InvalidSignature",
+    "type": "error"
+}, {
+    "inputs": [{
+        "internalType": "address",
+        "name": "validatorImpl",
+        "type": "address"
+    }],
+    "name": "InvalidValidatorImpl",
+    "type": "error"
+}, {
+    "inputs": [],
+    "name": "NameTooLong",
+    "type": "error"
+}, {
+    "inputs": [],
+    "name": "NotFromSelf",
+    "type": "error"
+}, {
+    "inputs": [{
+        "internalType": "string",
+        "name": "str",
+        "type": "string"
+    }],
+    "name": "StringTooLong",
+    "type": "error"
+}, {
+    "inputs": [],
+    "name": "VersionTooLong",
+    "type": "error"
+}, {
+    "anonymous": false,
+    "inputs": [],
+    "name": "EIP712DomainChanged",
+    "type": "event"
+}, {
+    "anonymous": false,
+    "inputs": [{
+        "indexed": false,
+        "internalType": "address",
+        "name": "storageAddress",
+        "type": "address"
+    }],
+    "name": "StorageCreated",
+    "type": "event"
+}, {
+    "anonymous": false,
+    "inputs": [],
+    "name": "StorageInitialized",
+    "type": "event"
+}, {
+    "anonymous": false,
+    "inputs": [{
+        "indexed": false,
+        "internalType": "address",
+        "name": "validator",
+        "type": "address"
+    }],
+    "name": "ValidatorAdded",
+    "type": "event"
+}, {
+    "stateMutability": "payable",
+    "type": "fallback"
+}, {
+    "inputs": [],
+    "name": "ADDRESS_THIS",
+    "outputs": [{
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+    }],
+    "stateMutability": "view",
+    "type": "function"
+}, {
+    "inputs": [],
+    "name": "MAIN_STORAGE_IMPL",
+    "outputs": [{
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+    }],
+    "stateMutability": "view",
+    "type": "function"
+}, {
+    "inputs": [],
+    "name": "SESSION_TYPEHASH",
+    "outputs": [{
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+    }],
+    "stateMutability": "view",
+    "type": "function"
+}, {
+    "inputs": [{
+        "internalType": "address",
+        "name": "validatorImpl",
+        "type": "address"
+    }, {
+        "internalType": "bytes",
+        "name": "immutableArgs",
+        "type": "bytes"
+    }],
+    "name": "addValidator",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+}, {
+    "inputs": [{
+        "internalType": "address",
+        "name": "validatorImpl",
+        "type": "address"
+    }, {
+        "internalType": "bytes",
+        "name": "immutableArgs",
+        "type": "bytes"
+    }],
+    "name": "computeValidatorAddress",
+    "outputs": [{
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+    }],
+    "stateMutability": "view",
+    "type": "function"
+}, {
+    "inputs": [],
+    "name": "eip712Domain",
+    "outputs": [{
+        "internalType": "bytes1",
+        "name": "fields",
+        "type": "bytes1"
+    }, {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+    }, {
+        "internalType": "string",
+        "name": "version",
+        "type": "string"
+    }, {
+        "internalType": "uint256",
+        "name": "chainId",
+        "type": "uint256"
+    }, {
+        "internalType": "address",
+        "name": "verifyingContract",
+        "type": "address"
+    }, {
+        "internalType": "bytes32",
+        "name": "salt",
+        "type": "bytes32"
+    }, {
+        "internalType": "uint256[]",
+        "name": "extensions",
+        "type": "uint256[]"
+    }],
+    "stateMutability": "view",
+    "type": "function"
+}, {
+    "inputs": [{
+        "components": [{
+            "internalType": "address",
+            "name": "target",
+            "type": "address"
+        }, {
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+        }, {
+            "internalType": "bytes",
+            "name": "data",
+            "type": "bytes"
+        }],
+        "internalType": "struct Call[]",
+        "name": "calls",
+        "type": "tuple[]"
+    }, {
+        "components": [{
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+        }, {
+            "internalType": "address",
+            "name": "executor",
+            "type": "address"
+        }, {
+            "internalType": "address",
+            "name": "validator",
+            "type": "address"
+        }, {
+            "internalType": "uint256",
+            "name": "validUntil",
+            "type": "uint256"
+        }, {
+            "internalType": "uint256",
+            "name": "validAfter",
+            "type": "uint256"
+        }, {
+            "internalType": "bytes",
+            "name": "preHook",
+            "type": "bytes"
+        }, {
+            "internalType": "bytes",
+            "name": "postHook",
+            "type": "bytes"
+        }, {
+            "internalType": "bytes",
+            "name": "signature",
+            "type": "bytes"
+        }],
+        "internalType": "struct Session",
+        "name": "session",
+        "type": "tuple"
+    }],
+    "name": "executeFromExecutor",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+}, {
+    "inputs": [{
+        "components": [{
+            "internalType": "address",
+            "name": "target",
+            "type": "address"
+        }, {
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+        }, {
+            "internalType": "bytes",
+            "name": "data",
+            "type": "bytes"
+        }],
+        "internalType": "struct Call[]",
+        "name": "calls",
+        "type": "tuple[]"
+    }],
+    "name": "executeFromSelf",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+}, {
+    "inputs": [{
+        "components": [{
+            "internalType": "address",
+            "name": "target",
+            "type": "address"
+        }, {
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+        }, {
+            "internalType": "bytes",
+            "name": "data",
+            "type": "bytes"
+        }],
+        "internalType": "struct Call[]",
+        "name": "calls",
+        "type": "tuple[]"
+    }, {
+        "internalType": "address",
+        "name": "validator",
+        "type": "address"
+    }, {
+        "internalType": "bytes",
+        "name": "validationData",
+        "type": "bytes"
+    }],
+    "name": "executeWithValidator",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+}, {
+    "inputs": [],
+    "name": "getMainStorage",
+    "outputs": [{
+        "internalType": "contract IStorage",
+        "name": "",
+        "type": "address"
+    }],
+    "stateMutability": "view",
+    "type": "function"
+}, {
+    "inputs": [{
+        "components": [{
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+        }, {
+            "internalType": "address",
+            "name": "executor",
+            "type": "address"
+        }, {
+            "internalType": "address",
+            "name": "validator",
+            "type": "address"
+        }, {
+            "internalType": "uint256",
+            "name": "validUntil",
+            "type": "uint256"
+        }, {
+            "internalType": "uint256",
+            "name": "validAfter",
+            "type": "uint256"
+        }, {
+            "internalType": "bytes",
+            "name": "preHook",
+            "type": "bytes"
+        }, {
+            "internalType": "bytes",
+            "name": "postHook",
+            "type": "bytes"
+        }, {
+            "internalType": "bytes",
+            "name": "signature",
+            "type": "bytes"
+        }],
+        "internalType": "struct Session",
+        "name": "session",
+        "type": "tuple"
+    }],
+    "name": "getSessionTypedHash",
+    "outputs": [{
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+    }],
+    "stateMutability": "view",
+    "type": "function"
+}, {
+    "inputs": [{
+        "internalType": "uint256",
+        "name": "nonce",
+        "type": "uint256"
+    }, {
+        "components": [{
+            "internalType": "address",
+            "name": "target",
+            "type": "address"
+        }, {
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+        }, {
+            "internalType": "bytes",
+            "name": "data",
+            "type": "bytes"
+        }],
+        "internalType": "struct Call[]",
+        "name": "calls",
+        "type": "tuple[]"
+    }],
+    "name": "getValidationTypedHash",
+    "outputs": [{
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+    }],
+    "stateMutability": "view",
+    "type": "function"
+}, {
+    "inputs": [],
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+}, {
+    "inputs": [{
+        "internalType": "bytes32",
+        "name": "_hash",
+        "type": "bytes32"
+    }, {
+        "internalType": "bytes",
+        "name": "signature",
+        "type": "bytes"
+    }],
+    "name": "isValidSignature",
+    "outputs": [{
+        "internalType": "bytes4",
+        "name": "",
+        "type": "bytes4"
+    }],
+    "stateMutability": "view",
+    "type": "function"
+}, {
+    "inputs": [{
+        "internalType": "bytes4",
+        "name": "interfaceId",
+        "type": "bytes4"
+    }],
+    "name": "supportsInterface",
+    "outputs": [{
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+    }],
+    "stateMutability": "view",
+    "type": "function"
+}, {
+    "inputs": [{
+        "components": [{
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+        }, {
+            "internalType": "address",
+            "name": "executor",
+            "type": "address"
+        }, {
+            "internalType": "address",
+            "name": "validator",
+            "type": "address"
+        }, {
+            "internalType": "uint256",
+            "name": "validUntil",
+            "type": "uint256"
+        }, {
+            "internalType": "uint256",
+            "name": "validAfter",
+            "type": "uint256"
+        }, {
+            "internalType": "bytes",
+            "name": "preHook",
+            "type": "bytes"
+        }, {
+            "internalType": "bytes",
+            "name": "postHook",
+            "type": "bytes"
+        }, {
+            "internalType": "bytes",
+            "name": "signature",
+            "type": "bytes"
+        }],
+        "internalType": "struct Session",
+        "name": "session",
+        "type": "tuple"
+    }],
+    "name": "validateSession",
+    "outputs": [],
+    "stateMutability": "view",
+    "type": "function"
+}, {
+    "stateMutability": "payable",
+    "type": "receive"
+}]
