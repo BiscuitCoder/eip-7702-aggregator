@@ -22,7 +22,7 @@ export function TaskList() {
   }
 
   const handleExecute = async () => {
-    // 检查所有必填字段是否已填写
+    // Check if all required fields are filled
     const hasEmptyParams = modules.some(module => {
       if (!module.method?.inputs) return false
       return module.method.inputs.some((input: { name: string | number }) => {
@@ -32,24 +32,24 @@ export function TaskList() {
     })
 
     if (hasEmptyParams) {
-      toast.error("请填写所有必填参数")
+      toast.error("Please fill in all required parameters")
       return
     }
 
     try {
-      // 收集所有模块的数据
+      // Collect all module data
       const transactions = modules.map(module => ({
         contractAddress: module.contractAddress,
         method: module.method,
         params: module.params
       }))
 
-      // TODO: 调用合约执行交易
-      console.log("执行交易:", transactions)
-      toast.success("交易已提交")
+      // TODO: Execute contract transaction
+      console.log("Executing transaction:", transactions)
+      toast.success("Transaction submitted")
     } catch (error) {
-      console.error("执行交易失败:", error)
-      toast.error("执行交易失败")
+      console.error("Transaction execution failed:", error)
+      toast.error("Transaction execution failed")
     }
   }
 

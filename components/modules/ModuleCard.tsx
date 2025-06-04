@@ -37,7 +37,7 @@ export function ModuleCard({
         </Label>
         <Input
           id={param.name}
-          placeholder={`输入 ${param.type} 类型的 ${param.name}`}
+          placeholder={`Enter ${param.type} for ${param.name}`}
           value={module.params[param.name] || ""}
           onChange={(e) => handleParamChange(param.name, e.target.value)}
         />

@@ -43,8 +43,8 @@ export const AVAILABLE_MODULES: PresetModule[] = [
   {
     id: "approve",
     type: "approve",
-    title: "授权",
-    description: "授权代币给其他地址",
+    title: "Approve",
+    description: "Approve tokens to another address",
     icon: "🔐",
     method: {
       type: "function",
@@ -59,8 +59,8 @@ export const AVAILABLE_MODULES: PresetModule[] = [
   {
     id: "transfer",
     type: "transfer",
-    title: "转账",
-    description: "转账代币到指定地址",
+    title: "Transfer",
+    description: "Transfer tokens to a specified address",
     icon: "💸",
     method: {
       type: "function",
@@ -75,8 +75,8 @@ export const AVAILABLE_MODULES: PresetModule[] = [
   {
     id: "swap",
     type: "swap",
-    title: "兑换",
-    description: "在 DEX 上兑换代币",
+    title: "Swap",
+    description: "Swap tokens on DEX",
     icon: "🔄",
     method: {
       type: "function",

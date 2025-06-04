@@ -11,7 +11,7 @@ export function TransferForm({ module, onParamsChange }: TransferFormProps) {
   return (
     <div className="space-y-3">
       <div>
-        <Label htmlFor={`${module.id}-token`}>Token地址</Label>
+        <Label htmlFor={`${module.id}-token`}>Token Address</Label>
         <Input
           id={`${module.id}-token`}
           placeholder="0x..."
@@ -20,7 +20,7 @@ export function TransferForm({ module, onParamsChange }: TransferFormProps) {
         />
       </div>
       <div>
-        <Label htmlFor={`${module.id}-to`}>接收地址</Label>
+        <Label htmlFor={`${module.id}-to`}>Recipient Address</Label>
         <Input
           id={`${module.id}-to`}
           placeholder="0x..."
@@ -29,7 +29,7 @@ export function TransferForm({ module, onParamsChange }: TransferFormProps) {
         />
       </div>
       <div>
-        <Label htmlFor={`${module.id}-amount`}>转账数量</Label>
+        <Label htmlFor={`${module.id}-amount`}>Transfer Amount</Label>
         <Input
           id={`${module.id}-amount`}
           placeholder="100"

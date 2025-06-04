@@ -43,7 +43,7 @@ export function CustomContractForm({ contractAddress, methods, onMethodSelect }:
         </Label>
         <Input
           id={param.name}
-          placeholder={`输入 ${param.type} 类型的 ${param.name}`}
+          placeholder={`Enter ${param.type} for ${param.name}`}
           value={params[param.name] || ""}
           onChange={(e) => handleParamChange(param.name, e.target.value)}
         />
@@ -63,7 +63,7 @@ export function CustomContractForm({ contractAddress, methods, onMethodSelect }:
       id: uuidv4(),
       type: "custom",
       title: method.name,
-      description: `${isPayable ? "可接收 ETH" : "不可接收 ETH"} · ${method.inputs.length} 个参数`,
+      description: `${isPayable ? "Can receive ETH" : "Cannot receive ETH"} · ${method.inputs.length} parameters`,
       icon: firstLetter,
       method: method,
       params: initialParams,
@@ -87,12 +87,12 @@ export function CustomContractForm({ contractAddress, methods, onMethodSelect }:
                 <div className="flex gap-2 mt-1">
                   {method.payable && (
                     <Badge variant="default">
-                      <small>可接收 ETH</small>
+                      <small>Can receive ETH</small>
                     </Badge>
                   )}
                   {method.inputs.length > 0 && (
                     <Badge variant="outline">
-                      <small>{method.inputs.length} 个参数</small>
+                      <small>{method.inputs.length} parameters</small>
                     </Badge>
                   )}
                 </div>

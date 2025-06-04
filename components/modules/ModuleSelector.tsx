@@ -35,14 +35,14 @@ export function ModuleSelector() {
       console.log("Write methods:", writeMethods)
       setContractMethods(writeMethods)
       toast({
-        title: "成功",
-        description: `已获取 ${writeMethods.length} 个可写入方法`,
+        title: "Success",
+        description: `Retrieved ${writeMethods.length} writable methods`,
       })
     } catch (error) {
       console.error("Error fetching contract ABI:", error)
       toast({
-        title: "错误",
-        description: "获取合约 ABI 失败",
+        title: "Error",
+        description: "Failed to get contract ABI",
         variant: "destructive",
       })
     } finally {
@@ -67,7 +67,7 @@ export function ModuleSelector() {
       id: uuidv4(),
       type: "custom",
       title: method.name,
-      description: "自定义合约方法",
+      description: "Custom Contract Method",
       icon: method.name.charAt(0).toUpperCase(),
       contractAddress,
       method,
@@ -78,8 +78,8 @@ export function ModuleSelector() {
   return (
     <Tabs defaultValue="preset" className="w-full">
       <TabsList className="grid w-full grid-cols-2">
-        <TabsTrigger value="preset">预设模块</TabsTrigger>
-        <TabsTrigger value="custom">自定义合约</TabsTrigger>
+        <TabsTrigger value="preset">Preset Modules</TabsTrigger>
+        <TabsTrigger value="custom">Custom Contract</TabsTrigger>
       </TabsList>
       
       <TabsContent value="preset" className="mt-4">
@@ -106,7 +106,7 @@ export function ModuleSelector() {
       <TabsContent value="custom" className="mt-4">
         <div className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="contract-address">合约地址</Label>
+            <Label htmlFor="contract-address">Contract Address</Label>
             <div className="flex space-x-2">
               <Input
                 id="contract-address"
@@ -118,7 +118,7 @@ export function ModuleSelector() {
                 onClick={handleContractSubmit}
                 disabled={!contractAddress || isLoading}
               >
-                {isLoading ? "加载中..." : "获取"}
+                {isLoading ? "Loading..." : "Get"}
               </Button>
             </div>
           </div>
@@ -131,7 +131,7 @@ export function ModuleSelector() {
             />
           ) : (
             <div className="text-sm text-muted-foreground">
-              <p>输入合约地址后，系统将自动获取合约 ABI 并生成可交互的表单。</p>
+              <p>After entering the contract address, the system will automatically retrieve the contract ABI and generate an interactive form.</p>
             </div>
           )}
         </div>

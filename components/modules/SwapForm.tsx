@@ -12,13 +12,13 @@ export function SwapForm({ module, onParamsChange }: SwapFormProps) {
   return (
     <div className="space-y-3">
       <div>
-        <Label htmlFor={`${module.id}-tokenIn`}>输入Token</Label>
+        <Label htmlFor={`${module.id}-tokenIn`}>Input Token</Label>
         <Select
           value={module.params.tokenIn}
           onValueChange={(value) => onParamsChange({ tokenIn: value })}
         >
           <SelectTrigger>
-            <SelectValue placeholder="选择Token" />
+            <SelectValue placeholder="Select Token" />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="USDC">USDC</SelectItem>
@@ -29,13 +29,13 @@ export function SwapForm({ module, onParamsChange }: SwapFormProps) {
         </Select>
       </div>
       <div>
-        <Label htmlFor={`${module.id}-tokenOut`}>输出Token</Label>
+        <Label htmlFor={`${module.id}-tokenOut`}>Output Token</Label>
         <Select
           value={module.params.tokenOut}
           onValueChange={(value) => onParamsChange({ tokenOut: value })}
         >
           <SelectTrigger>
-            <SelectValue placeholder="选择Token" />
+            <SelectValue placeholder="Select Token" />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="USDC">USDC</SelectItem>
@@ -46,7 +46,7 @@ export function SwapForm({ module, onParamsChange }: SwapFormProps) {
         </Select>
       </div>
       <div>
-        <Label htmlFor={`${module.id}-amountIn`}>输入数量</Label>
+        <Label htmlFor={`${module.id}-amountIn`}>Input Amount</Label>
         <Input
           id={`${module.id}-amountIn`}
           placeholder="100"
@@ -55,7 +55,7 @@ export function SwapForm({ module, onParamsChange }: SwapFormProps) {
         />
       </div>
       <div>
-        <Label htmlFor={`${module.id}-slippage`}>滑点 (%)</Label>
+        <Label htmlFor={`${module.id}-slippage`}>Slippage (%)</Label>
         <Input
           id={`${module.id}-slippage`}
           placeholder="0.5"

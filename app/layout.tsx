@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'EVM-7702 Aggregator',
-  description: '通过拖拽方式组合多个交易模块，构建复杂的链上交易流程',
+  description: 'Build complex on-chain transaction flows by combining multiple transaction modules through drag and drop',
 }
 
 export default function RootLayout({

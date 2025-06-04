@@ -8,7 +8,7 @@ import "@rainbow-me/rainbowkit/styles.css"
 
 const config = getDefaultConfig({
   appName: "EVM-7702 Aggregator",
-  projectId: process.env.NEXT_PUBLIC_WALLET_PROJECT_ID as string, // 需要替换为你的 WalletConnect Project ID
+  projectId: process.env.NEXT_PUBLIC_WALLET_PROJECT_ID as string, // Replace with your WalletConnect Project ID
   chains: [bsc, mainnet],
 })
 

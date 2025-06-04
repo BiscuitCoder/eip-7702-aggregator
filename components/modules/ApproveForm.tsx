@@ -11,7 +11,7 @@ export function ApproveForm({ module, onParamsChange }: ApproveFormProps) {
   return (
     <div className="space-y-3">
       <div>
-        <Label htmlFor={`${module.id}-token`}>Token地址</Label>
+        <Label htmlFor={`${module.id}-token`}>Token Address</Label>
         <Input
           id={`${module.id}-token`}
           placeholder="0x..."
@@ -20,7 +20,7 @@ export function ApproveForm({ module, onParamsChange }: ApproveFormProps) {
         />
       </div>
       <div>
-        <Label htmlFor={`${module.id}-spender`}>Spender地址</Label>
+        <Label htmlFor={`${module.id}-spender`}>Spender Address</Label>
         <Input
           id={`${module.id}-spender`}
           placeholder="0x..."
@@ -29,7 +29,7 @@ export function ApproveForm({ module, onParamsChange }: ApproveFormProps) {
         />
       </div>
       <div>
-        <Label htmlFor={`${module.id}-amount`}>授权数量</Label>
+        <Label htmlFor={`${module.id}-amount`}>Approve Amount</Label>
         <Input
           id={`${module.id}-amount`}
           placeholder="1000"
