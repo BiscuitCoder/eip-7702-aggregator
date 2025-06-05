@@ -5,6 +5,7 @@ import { WagmiProvider } from "wagmi"
 import { bsc,mainnet } from "wagmi/chains"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import "@rainbow-me/rainbowkit/styles.css"
+import { Toaster } from "sonner";
 
 const config = getDefaultConfig({
   appName: "EVM-7702 Aggregator",
@@ -20,6 +21,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider>
           {children}
+          <Toaster position="top-center" richColors/>
         </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>

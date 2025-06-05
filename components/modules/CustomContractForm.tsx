@@ -1,7 +1,4 @@
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { ContractMethod } from "./types"
 import { Plus } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
@@ -33,22 +30,6 @@ export function CustomContractForm({ contractAddress, methods, onMethodSelect }:
       ...prev,
       [paramName]: value
     }))
-  }
-
-  const renderParamInput = (param: ContractMethod["inputs"][0]) => {
-    return (
-      <div key={param.name} className="space-y-2">
-        <Label htmlFor={param.name}>
-          {param.name} ({param.type})
-        </Label>
-        <Input
-          id={param.name}
-          placeholder={`Enter ${param.type} for ${param.name}`}
-          value={params[param.name] || ""}
-          onChange={(e) => handleParamChange(param.name, e.target.value)}
-        />
-      </div>
-    )
   }
 
   const handleMethodClick = (method: ContractMethod) => {
@@ -83,7 +64,7 @@ export function CustomContractForm({ contractAddress, methods, onMethodSelect }:
             <div className="flex items-center space-x-3 w-full justify-between">
               <MethodIcon name={method.name} />
               <div className="text-left flex-1">
-                <div className="font-medium">{method.name}</div>
+                <div className="font-medium wordBreak: break-all">{method.name}</div>
                 <div className="flex gap-2 mt-1">
                   {method.payable && (
                     <Badge variant="default">

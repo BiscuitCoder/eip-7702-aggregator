@@ -6,48 +6,54 @@ import { Input } from "@/components/ui/input"
 import { useState } from "react"
 import { Label } from "@/components/ui/label"
 import { CustomContractForm } from "./CustomContractForm"
-import { useToast } from "@/components/ui/use-toast"
 import { useTaskStore } from "@/lib/store"
 import { v4 as uuidv4 } from 'uuid'
+import { toast } from "sonner"
+import { ExampleContracts } from "./ExampleContracts"
+import { MockAbi } from "@/app/api/mock"
+import { truncateString } from "@/lib/utils"
 
 export function ModuleSelector() {
   const [contractAddress, setContractAddress] = useState("")
+  const [contractName, setContractName] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [contractMethods, setContractMethods] = useState<ContractMethod[]>([])
-  const { toast } = useToast()
-  const addModule = useTaskStore(state => state.addModule)
 
-  const handleContractSubmit = async () => {
-    if (!contractAddress) return
+  const addModule = useTaskStore(state => state.addModule)
+  const addCustomContract = useTaskStore(state => state.addCustomContract)
+
+  const handleContractSubmit = async (address?: string) => {
+    const targetAddress = address || contractAddress
+    if (!targetAddress) return toast.error("Please enter a contract address")
     setIsLoading(true)
     try {
-      const response = await fetch(`https://api.etherscan.io/api?module=contract&action=getabi&address=${contractAddress}&apikey=${process.env.NEXT_PUBLIC_ETHERSCAN_API_KEY}`)
-      const dataString = await response.json().then(res => res.result)
-      const data = JSON.parse(dataString) as ContractMethod[]
+      const response = await fetch(`/api/getabi?address=${targetAddress}`)    
+      const data = await response.json().then(res => res.data) as MockAbi
+      console.log(data)
       
       // 过滤出可写入的方法（非 view 和 pure 类型）
-      const writeMethods = data.filter(method => 
+      const writeMethods = data.abi.filter((method: any) => 
         method.type === "function" && 
         method.stateMutability !== "view" && 
         method.stateMutability !== "pure"
-      ).sort((a, b) => a.name.localeCompare(b.name))
+      ).sort((a: any, b: any) => a.name.localeCompare(b.name))
       
       console.log("Write methods:", writeMethods)
       setContractMethods(writeMethods)
-      toast({
-        title: "Success",
-        description: `Retrieved ${writeMethods.length} writable methods`,
-      })
+      // 添加合约地址到 store
+      addCustomContract(targetAddress, data.name)
+      setContractName(data.name)
     } catch (error) {
       console.error("Error fetching contract ABI:", error)
-      toast({
-        title: "Error",
-        description: "Failed to get contract ABI",
-        variant: "destructive",
-      })
+      toast.error("Failed to get contract ABI")
     } finally {
       setIsLoading(false)
     }
+  }
+
+  const selectEgContract = async (address: string) => {
+    setContractAddress(address)
+    await handleContractSubmit(address)
   }
 
   const handlePresetModuleSelect = (module: typeof AVAILABLE_MODULES[0]) => {
@@ -115,20 +121,28 @@ export function ModuleSelector() {
                 onChange={(e) => setContractAddress(e.target.value)}
               />
               <Button 
-                onClick={handleContractSubmit}
+                onClick={() => handleContractSubmit()}
                 disabled={!contractAddress || isLoading}
               >
                 {isLoading ? "Loading..." : "Get"}
               </Button>
             </div>
           </div>
+
+          <ExampleContracts onSelect={selectEgContract} />
           
           {contractMethods.length > 0 ? (
-            <CustomContractForm
-              contractAddress={contractAddress}
-              methods={contractMethods}
-              onMethodSelect={handleCustomMethodSelect}
-            />
+            <>
+              <div className="flex justify-between !mt-8">
+                <span className="text-md font-bold text-red-400">👇 {contractName}</span>
+                <span className="text-xs text-gray-500">{truncateString(contractAddress)}</span>
+              </div>
+              <CustomContractForm
+                contractAddress={contractAddress}
+                methods={contractMethods}
+                onMethodSelect={handleCustomMethodSelect}
+              />
+            </>
           ) : (
             <div className="text-sm text-muted-foreground">
               <p>After entering the contract address, the system will automatically retrieve the contract ABI and generate an interactive form.</p>

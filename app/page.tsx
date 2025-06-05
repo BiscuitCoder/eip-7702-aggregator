@@ -1,44 +1,27 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { useToast } from "@/components/ui/use-toast"
 import { ModuleSelector } from "@/components/modules/ModuleSelector"
 import { WalletConnect } from "@/components/WalletConnect"
 import { useAccount } from "wagmi"
 import { useTaskStore } from "@/lib/store"
 import { TaskList } from "@/components/modules/TaskList"
 import { useBatchCallContract } from "@/contracts/useContract"
+import { toast } from "sonner"
+import { encodeFunctionData } from 'viem'
 
 export default function Home() {
   const modules = useTaskStore(state => state.modules)
-  const { toast } = useToast()
   const { isConnected } = useAccount()
 
-  const { write } = useBatchCallContract()
+  const { write,status } = useBatchCallContract()
 
   const handleExecute = async () => {
-    write()
-    return;
     if (modules.length === 0) {
-      toast({
-        title: "Error",
-        description: "Please add at least one module",
-        variant: "destructive",
-      })
+      toast.error("Please add at least one module")
       return
     }
-
-    // Collect parameters from all modules
-    const transactionData = modules.map((module, index) => ({
-      index,
-      type: module.type,
-      title: module.title,
-      params: module.params,
-      contractAddress: module.contractAddress,
-      method: module.method
-    }))
-
-    console.log("Transaction data:", transactionData)
+    write()
   }
 
   return (
@@ -46,7 +29,7 @@ export default function Home() {
       <div className="mb-8">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold mb-2">EVM-7702 Transaction Aggregator</h1>
+            <h1 className="text-3xl font-bold mb-2">EIP-7702 Transaction Aggregator</h1>
             <p className="text-gray-600">
               Build complex on-chain transaction flows by combining multiple transaction modules through drag and drop.
             </p>
@@ -79,8 +62,9 @@ export default function Home() {
               {modules.length > 0 && isConnected && (
                 <Button
                   onClick={handleExecute}
+                  loading={status === 'pending'}
                 >
-                  Execute Transaction
+                  {status === 'pending' ? 'Executing...' : 'Execute Transaction'}
                 </Button>
               )}
             </div>

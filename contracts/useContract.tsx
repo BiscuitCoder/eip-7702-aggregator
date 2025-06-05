@@ -1,16 +1,23 @@
-import { useClient, useSendCalls, useWalletClient, useWriteContract } from "wagmi"
-import { CONTRACT_CONFIG } from "./config"
-import { encodeFunctionData, erc20Abi, parseEther, parseUnits } from "viem"
-import { useTaskStore } from "@/lib/store"
-import { Call } from "viem"
+import {
+  useAccount,
+  useClient,
+  useSendCalls,
+  useWalletClient,
+  useWriteContract,
+} from "wagmi";
+import { CONTRACT_CONFIG } from "./config";
+import { encodeFunctionData, erc20Abi, parseEther, parseUnits } from "viem";
+import { useTaskStore } from "@/lib/store";
+import { Call } from "viem";
 
 export const useBatchCallContract = () => {
-    const { writeContract, status, data } = useWriteContract()
-    const { sendCalls } = useSendCalls()
-    const modules = useTaskStore(state => state.modules)
-    const { data: walletClient } = useWalletClient();
+  const { sendCalls, status, data } = useSendCalls();
+  const modules = useTaskStore((state) => state.modules);
+  const { address } = useAccount();
+  const { data: walletClient } = useWalletClient()
 
-     // USDC 授权
+  // USDC 授权
+  /*
      const usdcApproveData = encodeFunctionData({
         abi: erc20Abi,
         functionName: 'approve',
@@ -19,33 +26,9 @@ export const useBatchCallContract = () => {
             parseUnits('1000', 6) // USDC 6位小数
         ]
     })
+    */
 
-    const test = async () => {
-        console.log('walletClient===>',walletClient);
-        if(!walletClient) return console.log('walletClient is null');
-        walletClient.sendCalls({
-            account: walletClient.account,
-            calls: [
-                {
-                    to: '0xdac17f958d2ee523a2206206994597c13d831ec7',
-                    data: usdcApproveData
-                },
-                {
-                    to: '0xd6985222b31f2a84129ba1fa80387d31d943b189',
-                    value: parseEther('0.00001')
-                },
-                {
-                    to: '0x44e506ce628636ab5fb9242097571f330331cbe0',
-                    value: parseEther('0.00002')
-                },
-            ]
-        })   
-    }
-    
     const getBatchCalls = () => {
-        console.log("client",walletClient)
-
-        
         
         // USDC 授权
         const usdcApproveData = encodeFunctionData({
@@ -78,10 +61,54 @@ export const useBatchCallContract = () => {
             }
         ] as Call[]
     }
-      
-    return {
-        write:()=>test(),
-        status,
-        data
-    }
-}
+
+  const write = async () => {
+    if (!address) return console.log("address is null");
+    // const batchCalls = getBatchCalls()
+    // console.log("batchCalls",batchCalls)
+    // walletClient?.sendCalls({
+    //   account: address,
+    //   calls: batchCalls as Call[],
+    // })
+    // return;
+    const transactionData = modules.map((module, index) => {
+      // 构建交易数据
+      const data = encodeFunctionData({
+        abi: [module.method],
+        functionName: module.method.name,
+        args: Object.values(module.params),
+      });
+
+      return {
+        index,
+        type: module.type,
+        title: module.title,
+        data,
+        to: module.contractAddress,
+        method: module.method,
+      };
+    });
+
+    console.log("Transaction data:", transactionData);
+
+    // 构建最终交易对象
+    const transactions = transactionData.map((tx) => ({
+      data: tx.data,
+      to: tx.to,
+    }));
+
+    console.log("batchCalls",getBatchCalls());
+
+    console.log("Final transactions:", transactions);
+    walletClient?.sendCalls({
+      account: address,
+      calls: transactions as Call[],
+    })
+  };
+
+  return {
+    write,
+    status,
+    data,
+  };
+};

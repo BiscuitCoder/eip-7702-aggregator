@@ -2,6 +2,8 @@
 
 A transaction aggregator based on EVM-7702 that allows users to combine multiple transaction modules through drag-and-drop to build complex transaction chains.
 
+<img src="./public/coverpng.png"/>
+
 ## Features
 
 ### 1. Modular Transactions
