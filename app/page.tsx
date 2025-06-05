@@ -14,7 +14,7 @@ export default function Home() {
   const modules = useTaskStore(state => state.modules)
   const { isConnected } = useAccount()
 
-  const { write,status } = useBatchCallContract()
+  const { write,loading } = useBatchCallContract()
 
   const handleExecute = async () => {
     if (modules.length === 0) {
@@ -62,9 +62,9 @@ export default function Home() {
               {modules.length > 0 && isConnected && (
                 <Button
                   onClick={handleExecute}
-                  loading={status === 'pending'}
+                  loading={loading}
                 >
-                  {status === 'pending' ? 'Executing...' : 'Execute Transaction'}
+                  {loading ? 'Executing...' : 'Execute Transaction'}
                 </Button>
               )}
             </div>

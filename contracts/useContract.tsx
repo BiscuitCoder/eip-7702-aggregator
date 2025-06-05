@@ -9,12 +9,14 @@ import { CONTRACT_CONFIG } from "./config";
 import { Address, encodeFunctionData, erc20Abi, parseEther, parseUnits } from "viem";
 import { useTaskStore } from "@/lib/store";
 import { Call } from "viem";
+import { useState } from "react";
 
 export const useBatchCallContract = () => {
   const { sendCalls, status, data } = useSendCalls();
   const modules = useTaskStore((state) => state.modules);
   const { address } = useAccount();
   const { data: walletClient } = useWalletClient()
+  const [loading, setLoading] = useState(false);
 
   // USDC 授权
   /*
@@ -104,14 +106,31 @@ export const useBatchCallContract = () => {
 
     // console.log("batchCalls",getBatchCalls());
 
+
+    /*
+    transactions.push({
+      // @ts-ignore
+      value: parseEther('0.0001'),
+      to: '0x0000000000000000000000000000000000000000',
+    })
+      */
+
     console.log("Final transactions:", transactions);
+    setLoading(true);
     walletClient?.sendCalls({
       account: address,
       calls: transactions as Call[],
-    })
+    }).then((res) => {
+      console.log('res===>', res);
+    }).catch((err) => {
+      console.log('err===>', err);
+    }).finally(() => {
+      setLoading(false);
+    });
   };
 
   return {
+    loading,
     write,
     status,
     data,
