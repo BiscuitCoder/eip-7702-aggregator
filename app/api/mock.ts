@@ -19,10 +19,6 @@ export const mockAbi:Record<string, MockAbi> = {
         name:'USDC',
         abi:erc20Abi,
     },
-    '0xf048f574e97949b8abeeda29390fd6efc648a05a':{
-        name:'TEST_45_TOKEN',
-        abi:erc20Abi,
-    },
     // https://dexscreener.com/bsc/0x92b7807bf19b7dddf89b706143896d05228f3121
     '0x92b7807bf19b7dddf89b706143896d05228f3121':{
         name:'SWAP_USDT_USDC',
