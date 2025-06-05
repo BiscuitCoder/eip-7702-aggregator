@@ -10,6 +10,7 @@ import { Address, encodeFunctionData, erc20Abi, parseEther, parseUnits } from "v
 import { useTaskStore } from "@/lib/store";
 import { Call } from "viem";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export const useBatchCallContract = () => {
   const { sendCalls, status, data } = useSendCalls();
@@ -75,6 +76,7 @@ export const useBatchCallContract = () => {
     })
     return;
     */
+   try {
     const transactionData = modules.map((module, index) => {
       console.log('module write===>', module);
       if(module.customInstructions){
@@ -127,6 +129,12 @@ export const useBatchCallContract = () => {
     }).finally(() => {
       setLoading(false);
     });
+  } catch (error) {
+    console.log('error===>', error);
+    toast.error('Transaction Batch Failed!');
+  } finally {
+    setLoading(false);
+  }
   };
 
   return {
