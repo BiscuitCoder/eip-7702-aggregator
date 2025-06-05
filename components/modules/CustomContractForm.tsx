@@ -4,10 +4,12 @@ import { Plus } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { useTaskStore } from "@/lib/store"
 import { v4 as uuidv4 } from "uuid"
+import { truncateString } from "@/lib/utils"
 
 interface CustomContractFormProps {
   contractAddress: string
   methods: ContractMethod[]
+  contractName: string
   onMethodSelect: (method: ContractMethod, params: Record<string, any>) => void
 }
 
@@ -20,7 +22,7 @@ function MethodIcon({ name }: { name: string }) {
   )
 }
 
-export function CustomContractForm({ contractAddress, methods, onMethodSelect }: CustomContractFormProps) {
+export function CustomContractForm({ contractAddress, methods, contractName }: CustomContractFormProps) {
   const [selectedMethod, setSelectedMethod] = useState<ContractMethod | null>(null)
   const [params, setParams] = useState<Record<string, any>>({})
   const addModule = useTaskStore((state) => state.addModule)
@@ -41,10 +43,11 @@ export function CustomContractForm({ contractAddress, methods, onMethodSelect }:
     }, {})
 
     addModule({
+      name: contractName,
       id: uuidv4(),
       type: "custom",
       title: method.name,
-      description: `${isPayable ? "Can receive ETH" : "Cannot receive ETH"} · ${method.inputs.length} parameters`,
+      description: `${contractName} | ${truncateString(contractAddress)}`,
       icon: firstLetter,
       method: method,
       params: initialParams,

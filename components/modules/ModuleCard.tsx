@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { TaskModule, useTaskStore } from "@/lib/store";
-import { MethodIcon } from "@/components/modules/MethodIcon";
 
 interface ModuleCardProps {
   module: TaskModule;
@@ -45,22 +44,20 @@ export function ModuleCard({
     );
   };
 
-  const isLetter = /^[a-zA-Z]$/.test(module.icon);
-
   return (
     <div className="relative border rounded-lg p-4 bg-white">
       <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-4">
           <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold shadow-lg">
             {index + 1}
           </div>
-          {isLetter ? (
+          {/* {isLetter ? (
             <MethodIcon letter={module.icon} />
           ) : (
             <span className="text-xl">{module.icon}</span>
-          )}
-          <div>
-            <h3 className="font-medium">{module.title}</h3>
+          )} */}
+          <div className="space-y-2">
+            <h3 className="font-medium text-2xl">{module.title}</h3>
             <p className="text-sm text-muted-foreground">
               {module.description}
             </p>
@@ -82,7 +79,7 @@ export function ModuleCard({
       </div>
 
       <div className="grid grid-cols-2 gap-4">
-        {module.method?.inputs.map(renderParamInput)}
+        { module.customComponent ? module.customComponent(module) : module.method?.inputs.map(renderParamInput) }
       </div>
     </div>
   );

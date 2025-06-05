@@ -57,19 +57,26 @@ export function ModuleSelector() {
   }
 
   const handlePresetModuleSelect = (module: typeof AVAILABLE_MODULES[0]) => {
+    if(module.type === 'swap'){
+      toast.warning("Swap module is not available yet")
+    }
+    console.log("module===>",module)
     addModule({
+      name: module.title,
       id: uuidv4(),
       type: module.type,
       title: module.title,
       description: module.description,
       icon: module.icon,
       method: module.method,
-      params: {}
+      params: {},
+      customComponent: module.customComponent
     })
   }
 
   const handleCustomMethodSelect = (method: ContractMethod, params: Record<string, any>) => {
     addModule({
+      name: contractName,
       id: uuidv4(),
       type: "custom",
       title: method.name,
@@ -140,6 +147,7 @@ export function ModuleSelector() {
               <CustomContractForm
                 contractAddress={contractAddress}
                 methods={contractMethods}
+                contractName={contractName}
                 onMethodSelect={handleCustomMethodSelect}
               />
             </>

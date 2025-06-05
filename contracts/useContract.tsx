@@ -6,7 +6,7 @@ import {
   useWriteContract,
 } from "wagmi";
 import { CONTRACT_CONFIG } from "./config";
-import { encodeFunctionData, erc20Abi, parseEther, parseUnits } from "viem";
+import { Address, encodeFunctionData, erc20Abi, parseEther, parseUnits } from "viem";
 import { useTaskStore } from "@/lib/store";
 import { Call } from "viem";
 
@@ -64,14 +64,20 @@ export const useBatchCallContract = () => {
 
   const write = async () => {
     if (!address) return console.log("address is null");
-    // const batchCalls = getBatchCalls()
-    // console.log("batchCalls",batchCalls)
-    // walletClient?.sendCalls({
-    //   account: address,
-    //   calls: batchCalls as Call[],
-    // })
-    // return;
+    /*
+    const batchCalls = getBatchCalls()
+    console.log("batchCalls",batchCalls)
+    walletClient?.sendCalls({
+      account: address,
+      calls: batchCalls as Call[],
+    })
+    return;
+    */
     const transactionData = modules.map((module, index) => {
+      console.log('module write===>', module);
+      if(module.customInstructions){
+        return module.customInstructions;
+      }
       // 构建交易数据
       const data = encodeFunctionData({
         abi: [module.method],
@@ -79,25 +85,24 @@ export const useBatchCallContract = () => {
         args: Object.values(module.params),
       });
 
-      return {
-        index,
-        type: module.type,
-        title: module.title,
+      return [{
         data,
-        to: module.contractAddress,
-        method: module.method,
-      };
+        to: module.contractAddress as Address,
+      }];
     });
 
     console.log("Transaction data:", transactionData);
 
+    // 将二维数组转为一维数组
+    const flatTransactionData = transactionData.flat();
+
     // 构建最终交易对象
-    const transactions = transactionData.map((tx) => ({
+    const transactions = flatTransactionData.map((tx) => ({
       data: tx.data,
       to: tx.to,
     }));
 
-    console.log("batchCalls",getBatchCalls());
+    // console.log("batchCalls",getBatchCalls());
 
     console.log("Final transactions:", transactions);
     walletClient?.sendCalls({

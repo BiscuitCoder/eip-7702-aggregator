@@ -1,3 +1,5 @@
+import BatchApprove from "./CustomComponents/BatchApprove"
+
 export interface TaskModule {
   id: string
   type: "approve" | "transfer" | "swap" | "custom"
@@ -37,14 +39,15 @@ export interface PresetModule {
   icon: string
   method: ContractMethod
   defaultParams?: Record<string, any>
+  customComponent?: (params:any) => React.ReactNode
 }
 
 export const AVAILABLE_MODULES: PresetModule[] = [
   {
     id: "approve",
     type: "approve",
-    title: "Approve",
-    description: "Approve tokens to another address",
+    title: "Batch Approve",
+    description: "Batch Approve tokens",
     icon: "🔐",
     method: {
       type: "function",
@@ -54,7 +57,8 @@ export const AVAILABLE_MODULES: PresetModule[] = [
         { name: "amount", type: "uint256" }
       ],
       stateMutability: "nonpayable"
-    }
+    },
+    customComponent: (params: any) => <BatchApprove {...params} />
   },
   {
     id: "transfer",
@@ -76,7 +80,7 @@ export const AVAILABLE_MODULES: PresetModule[] = [
     id: "swap",
     type: "swap",
     title: "Swap",
-    description: "Swap tokens on DEX",
+    description: "Swap tokens on DEX (Open soon ...)",
     icon: "🔄",
     method: {
       type: "function",

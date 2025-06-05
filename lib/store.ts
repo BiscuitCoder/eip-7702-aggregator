@@ -1,8 +1,11 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 import { toast } from 'sonner'
+import { Address } from 'viem'
 
-export interface TaskModule {
+
+export type TaskModule = {
+  name: string
   id: string
   type: string
   title: string
@@ -10,9 +13,10 @@ export interface TaskModule {
   icon: string
   method?: any
   params: Record<string, any>
-  contractAddress?: string
+  contractAddress?: string,
+  customComponent?: (params: Record<string, any>) => React.ReactNode,
+  customInstructions?: {to:Address,data:string}[],//自定义组件的指令单独放在这里
 }
-
 interface TaskStore {
   modules: TaskModule[]
   customContracts: { address: string; name: string }[]
