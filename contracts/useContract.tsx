@@ -9,7 +9,7 @@ import { CONTRACT_CONFIG } from "./config";
 import { Address, encodeFunctionData, erc20Abi, parseEther, parseUnits } from "viem";
 import { useTaskStore } from "@/lib/store";
 import { Call } from "viem";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export const useBatchCallContract = () => {
@@ -86,12 +86,13 @@ export const useBatchCallContract = () => {
       const data = encodeFunctionData({
         abi: [module.method],
         functionName: module.method.name,
-        args: Object.values(module.params),
+        args: module.method.inputs.length ? Object.values(module.params) : []
       });
 
       return [{
         data,
         to: module.contractAddress as Address,
+        value: module.isPayable ? module.params.payValue : undefined
       }];
     });
 
@@ -104,6 +105,8 @@ export const useBatchCallContract = () => {
     const transactions = flatTransactionData.map((tx) => ({
       data: tx.data,
       to: tx.to,
+      // @ts-ignore
+      value: tx.value ? tx.value : undefined
     }));
 
     // console.log("batchCalls",getBatchCalls());
@@ -129,6 +132,12 @@ export const useBatchCallContract = () => {
     setLoading(false);
   }
   };
+
+  useEffect(() => {
+    if(status === "success") {
+      toast.success('Transaction Batch Success!');
+    }
+  }, [status])
 
   return {
     loading,

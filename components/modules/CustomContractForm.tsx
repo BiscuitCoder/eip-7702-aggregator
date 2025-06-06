@@ -42,6 +42,10 @@ export function CustomContractForm({ contractAddress, methods, contractName }: C
       return acc
     }, {})
 
+    if(isPayable) {
+      initialParams.payValue = undefined
+    }
+
     addModule({
       name: contractName,
       id: uuidv4(),
@@ -51,7 +55,8 @@ export function CustomContractForm({ contractAddress, methods, contractName }: C
       icon: firstLetter,
       method: method,
       params: initialParams,
-      contractAddress: contractAddress
+      contractAddress: contractAddress,
+      isPayable
     })
   }
 
@@ -62,7 +67,6 @@ export function CustomContractForm({ contractAddress, methods, contractName }: C
           <div
             key={index}
             className="w-full justify-start h-auto py-3 px-4 cursor-pointer border border-gray-200 rounded-md hover:bg-gray-50 transition-colors"
-            onClick={() => handleMethodClick(method)}
           >
             <div className="flex items-center space-x-3 w-full justify-between">
               <MethodIcon name={method.name} />
@@ -81,7 +85,7 @@ export function CustomContractForm({ contractAddress, methods, contractName }: C
                   )}
                 </div>
               </div>
-              <Plus className="h-6 w-6 opacity-50" />
+              <Plus className="h-6 w-6 opacity-50" onClick={() => handleMethodClick(method)}/>
             </div>
           </div>
         ))}

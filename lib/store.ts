@@ -16,6 +16,7 @@ export type TaskModule = {
   contractAddress?: string,
   customComponent?: (params: Record<string, any>) => React.ReactNode,
   customInstructions?: {to:Address,data:string}[],//自定义组件的指令单独放在这里
+  isPayable?: boolean
 }
 interface TaskStore {
   modules: TaskModule[]

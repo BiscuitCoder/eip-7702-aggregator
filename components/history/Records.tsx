@@ -38,7 +38,6 @@ const getOperationEmoji = (type: string) => {
     case "Transfer":
       return "💸";
     case "Swap(Pancake)":
-      return "🔄";
     case "Swap(Uniswap)":
       return "🔄";
     default:

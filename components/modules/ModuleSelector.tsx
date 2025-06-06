@@ -101,7 +101,6 @@ export function ModuleSelector() {
             <div
               key={module.id}
               className="w-full justify-start h-auto py-3 px-4 cursor-pointer border border-gray-200 rounded-md hover:bg-gray-50 transition-colors"
-              onClick={() => handlePresetModuleSelect(module)}
             >
               <div className="flex items-center space-x-3 w-full justify-between">
                 <span className="text-xl">{module.icon}</span>
@@ -109,7 +108,7 @@ export function ModuleSelector() {
                   <div className="font-medium">{module.title}</div>
                   <div className="text-sm text-muted-foreground">{module.description}</div>
                 </div>
-                <Plus className="h-6 w-6 opacity-50" />
+                <Plus className="h-6 w-6 opacity-50" onClick={() => handlePresetModuleSelect(module)}/>
               </div>
             </div>
           ))}

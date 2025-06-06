@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { TaskModule, useTaskStore } from "@/lib/store";
+import { useMemo } from "react";
 
 interface ModuleCardProps {
   module: TaskModule;
@@ -44,6 +45,12 @@ export function ModuleCard({
     );
   };
 
+  const customFormInputs = module.isPayable ? [...(module.method?.inputs || []), {
+    name: "payValue",
+    type: "uint256"
+  }] : module.method?.inputs || []
+  
+
   return (
     <div className="relative border rounded-lg p-4 bg-white">
       <div className="flex items-center justify-between mb-4">
@@ -79,7 +86,7 @@ export function ModuleCard({
       </div>
 
       <div className="grid grid-cols-2 gap-4">
-        { module.customComponent ? module.customComponent(module) : module.method?.inputs.map(renderParamInput) }
+        { module.customComponent ? module.customComponent(module) : customFormInputs.map(renderParamInput) }
       </div>
     </div>
   );
