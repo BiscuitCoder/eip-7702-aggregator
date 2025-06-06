@@ -40,7 +40,7 @@ export default function Home() {
             </div>
             <p className="text-gray-600">
               <small className="text-gray-400">
-                <i className="ri-error-warning-fill"></i> 
+                <i className="ri-error-warning-fill mr-1 text-red-400"></i> 
                 Note:You need to use the MetaMask and set account as a EIP-7702 smart account.
                 (Currently only support BSC)
                 <a href="https://support.metamask.io/configure/accounts/switch-to-or-revert-from-a-smart-account/" 

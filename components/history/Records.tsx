@@ -53,7 +53,7 @@ const Records = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" className="font-medium">
+        <Button variant="outline" className="font-medium shadow-lg shadow-[#00000013] rounded-[10px]">
             <i className="ri-file-history-line text-lg"></i>
             <span>History</span>
         </Button>
