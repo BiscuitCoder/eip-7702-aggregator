@@ -10,7 +10,7 @@ import { useTaskStore } from "@/lib/store"
 import { v4 as uuidv4 } from 'uuid'
 import { toast } from "sonner"
 import { ExampleContracts } from "./ExampleContracts"
-import { MockAbi } from "@/app/api/mock"
+import { mockAArr, MockAbi } from "@/app/api/mock"
 import { truncateString } from "@/lib/utils"
 
 export function ModuleSelector() {
@@ -133,6 +133,19 @@ export function ModuleSelector() {
               >
                 {isLoading ? "Loading..." : "Get"}
               </Button>
+            </div>
+          </div>
+
+          <div className="flex items-center space-x-2 overflow-x-auto">
+            <small>Eg:</small>
+            <div className="flex items-center text-xs gap-2">
+              {
+                mockAArr.map((item) => (
+                  <div className="cursor-pointer border border-gray-200 rounded-md px-2 py-1 opacity-50 hover:opacity-100" key={item.address} onClick={() => selectEgContract(item.address)}>
+                    <span>{item.name}</span>
+                  </div>
+                ))
+              }
             </div>
           </div>
 
