@@ -19,6 +19,8 @@ const Footer = () => {
             <a href="https://github.com/BiscuitCoder/eip-7702-aggregator" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">Github</a>
             |
             <a href="https://github.com/CasualHackathon/EIP-7702" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">EIP-7702 Casual Hackathon</a>
+            |
+            <a href="https://www.uxscout.xyz/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">EIP-7702</a>
         </div>
     </div>
   )

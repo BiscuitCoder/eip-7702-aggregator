@@ -33,15 +33,16 @@ export default function Home() {
           <div>
             <img src="/logo.svg" alt="logo" width={200} className="mb-4" />
             <div className="text-xl font-bold mb-2 flex items-center space-x-4">
-              <span>EIP-7702 Transaction Aggregator</span>
+              <span>Use EIP-7702 to build and send multiple transactions.</span>
               <a href="https://github.com/BiscuitCoder/eip-7702-aggregator" target="_blank" rel="noopener noreferrer">
                 <img src="/github.svg" alt="Github" width={20} height={20} />
               </a>
             </div>
             <p className="text-gray-600">
-              Build complex on-chain transaction flows by combining multiple transaction modules through drag and drop.<br/>
               <small className="text-gray-400">
-                <i className="ri-error-warning-fill"></i> Note:You need to use the MetaMask and set account as a EIP-7702 smart account.
+                <i className="ri-error-warning-fill"></i> 
+                Note:You need to use the MetaMask and set account as a EIP-7702 smart account.
+                (Currently only support BSC)
                 <a href="https://support.metamask.io/configure/accounts/switch-to-or-revert-from-a-smart-account/" 
                   target="_blank" rel="noopener noreferrer" className="text-yellow-600 ml-2 underline">
                   Learn more 👉

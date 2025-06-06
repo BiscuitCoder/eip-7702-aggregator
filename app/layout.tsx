@@ -7,8 +7,8 @@ import { Providers } from './providers'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Tan.X',
-  description: 'Build complex on-chain transaction flows by combining multiple transaction modules through drag and drop',
+  title: 'PathTx',
+  description: 'Build complex transaction flows by combining multiple transaction modules through drag and drop',
   icons: {
     icon: '/icon.svg',
   },
@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="zh">
+    <html lang="en">
       <body className={inter.className}>
         <Providers>{children}</Providers>
       </body>
