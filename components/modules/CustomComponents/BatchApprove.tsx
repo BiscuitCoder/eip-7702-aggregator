@@ -23,6 +23,7 @@ const BatchApprove = (module: TaskModule) => {
   console.log('module22===>', module);
 
   useEffect(() => {
+    console.log('selectedTokens===>', selectedTokens);
     if(!selectedTokens.length) return;
     try {
         const instructions = selectedTokens.map(token => {
@@ -54,7 +55,7 @@ const BatchApprove = (module: TaskModule) => {
     } catch (error) {
         console.log('error===>', error);
     }
-  }, [selectedTokens]);
+  }, [selectedTokens, spenderAddress, amount]);
 
   return (
     <>

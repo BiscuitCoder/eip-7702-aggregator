@@ -118,17 +118,10 @@ export const useBatchCallContract = () => {
       */
 
     console.log("Final transactions:", transactions);
-    setLoading(true);
-    walletClient?.sendCalls({
+    sendCalls({
       account: address,
       calls: transactions as Call[],
-    }).then((res) => {
-      console.log('res===>', res);
-    }).catch((err) => {
-      console.log('err===>', err);
-    }).finally(() => {
-      setLoading(false);
-    });
+    })
   } catch (error) {
     console.log('error===>', error);
     toast.error('Transaction Batch Failed!');

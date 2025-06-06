@@ -7,8 +7,11 @@ import { Providers } from './providers'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'EVM-7702 Aggregator',
+  title: 'Tan.X',
   description: 'Build complex on-chain transaction flows by combining multiple transaction modules through drag and drop',
+  icons: {
+    icon: '/icon.svg',
+  },
 }
 
 export default function RootLayout({

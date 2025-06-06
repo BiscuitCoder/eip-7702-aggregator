@@ -137,7 +137,7 @@ export function ModuleSelector() {
           </div>
 
           <div className="flex items-center space-x-2 overflow-x-auto">
-            <small>Eg:</small>
+            <small>eg:</small>
             <div className="flex items-center text-xs gap-2">
               {
                 mockAArr.map((item) => (

@@ -9,12 +9,14 @@ import { TaskList } from "@/components/modules/TaskList"
 import { useBatchCallContract } from "@/contracts/useContract"
 import { toast } from "sonner"
 import { encodeFunctionData } from 'viem'
+import Records from "@/components/history/Records"
+import Footer from "@/components/Footer"
 
 export default function Home() {
   const modules = useTaskStore(state => state.modules)
   const { isConnected } = useAccount()
 
-  const { write,loading } = useBatchCallContract()
+  const { write,status } = useBatchCallContract()
 
   const handleExecute = async () => {
     if (modules.length === 0) {
@@ -29,12 +31,13 @@ export default function Home() {
       <div className="mb-8">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold mb-2 flex items-center space-x-4">
+            <img src="/logo.svg" alt="logo" width={200} className="mb-4" />
+            <div className="text-xl font-bold mb-2 flex items-center space-x-4">
               <span>EIP-7702 Transaction Aggregator</span>
               <a href="https://github.com/BiscuitCoder/eip-7702-aggregator" target="_blank" rel="noopener noreferrer">
                 <img src="/github.svg" alt="Github" width={20} height={20} />
               </a>
-            </h1>
+            </div>
             <p className="text-gray-600">
               Build complex on-chain transaction flows by combining multiple transaction modules through drag and drop.<br/>
               <small className="text-gray-400">
@@ -46,7 +49,10 @@ export default function Home() {
               </small>
             </p>
           </div>
-          <WalletConnect />
+          <div className="flex items-center space-x-2">
+            <WalletConnect />
+            <Records />
+          </div>
         </div>
       </div>
 
@@ -74,9 +80,9 @@ export default function Home() {
               {modules.length > 0 && isConnected && (
                 <Button
                   onClick={handleExecute}
-                  loading={loading}
+                  loading={status === 'pending'}
                 >
-                  {loading ? 'Executing...' : 'Execute Transaction'}
+                  {status === 'pending' ? 'Executing...' : 'Execute Transaction'}
                 </Button>
               )}
             </div>
@@ -85,6 +91,7 @@ export default function Home() {
           <TaskList />
         </div>
       </div>
+      <Footer />  
     </div>
   )
 }

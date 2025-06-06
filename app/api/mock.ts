@@ -1,5 +1,6 @@
 import { erc20Abi } from "viem";
 import swapAbi from "./abis/usdt_usdc_pair.json";
+import wbnbAbi from "./abis/wbnb.json";
 
 export type MockAbi = {
     name: string
@@ -9,7 +10,7 @@ export type MockAbi = {
 export const mockAbi:Record<string, MockAbi> = {
     '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c':{
         name:'WBNB',
-        abi:erc20Abi,
+        abi:wbnbAbi,
     },
     '0x55d398326f99059fF775485246999027B3197955':{
         name:'USDT',
