@@ -22,7 +22,7 @@ const mockTransactions = [
     ],
   },
   {
-    hash: "0x3bf9ccc4c4a2b37115d569e531d76823d112e17577b81fc5b74d5c46d762f9e9",
+    hash: "0x75b86a0ac5f75028a2d595807ba5e970cddbf0da1799d6f3baa8fa161fa10696",
     timestamp: "03/20 09:15:00",
     operations: [
       { type: "Approve", token: "USDT", amount: "2000 -> 0x92b7...8f3121" },
@@ -47,7 +47,7 @@ const getOperationEmoji = (type: string) => {
 
 const Records = () => {
   const handleViewOnExplorer = (hash: string) => {
-    window.open(`https://bscscan.com/tx/${hash}`, "_blank");
+    window.open(`https://bscscan.com/tx/${hash}#eventlog`, "_blank");
   };
 
   return (

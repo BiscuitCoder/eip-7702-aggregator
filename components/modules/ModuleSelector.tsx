@@ -57,9 +57,6 @@ export function ModuleSelector() {
   }
 
   const handlePresetModuleSelect = (module: typeof AVAILABLE_MODULES[0]) => {
-    if(module.type === 'swap'){
-      toast.warning("Swap module is not available yet")
-    }
     console.log("module===>",module)
     addModule({
       name: module.title,

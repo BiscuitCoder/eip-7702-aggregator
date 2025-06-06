@@ -1,4 +1,6 @@
 import BatchApprove from "./CustomComponents/BatchApprove"
+import BatchTransfer from "./CustomComponents/BatchTransfer"
+import Swap from "./CustomComponents/Swap"
 
 export interface TaskModule {
   id: string
@@ -63,8 +65,8 @@ export const AVAILABLE_MODULES: PresetModule[] = [
   {
     id: "transfer",
     type: "transfer",
-    title: "Transfer",
-    description: "Transfer tokens to a specified address",
+    title: "Batch Transfer",
+    description: "Batch transfer tokens to addresses",
     icon: "💸",
     method: {
       type: "function",
@@ -74,7 +76,8 @@ export const AVAILABLE_MODULES: PresetModule[] = [
         { name: "amount", type: "uint256" }
       ],
       stateMutability: "nonpayable"
-    }
+    },
+    customComponent: (params: any) => <BatchTransfer {...params} />
   },
   {
     id: "swap",
@@ -93,6 +96,7 @@ export const AVAILABLE_MODULES: PresetModule[] = [
         { name: "deadline", type: "uint256" }
       ],
       stateMutability: "nonpayable"
-    }
+    },
+    customComponent: (params: any) => <Swap {...params} />
   }
 ]
