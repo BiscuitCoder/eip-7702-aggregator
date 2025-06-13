@@ -42,6 +42,7 @@
         "@rainbow-me/rainbowkit": "^2.2.5",
         "@tanstack/react-query": "^5.79.2",
         "@types/uuid": "^10.0.0",
+        "@vercel/analytics": "^1.5.0",
         "autoprefixer": "^10.4.20",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
